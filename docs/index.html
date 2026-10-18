@@ -1,0 +1,394 @@
+<title>Chapter 6 Battle Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: single-column printed-battle-plan document, day-badged schedule
+   blocks, theme-grouped fact cards, one scrollable patterns table. */
+:root {
+  --bg: #F5F3EE;
+  --fg: #202A36;
+  --muted: #5C6673;
+  --accent: #1F5B78;
+  --accent-ink: #FFFFFF;
+  --trap: #93362A;
+  --surface: #FCFBF8;
+  --line: #D9D3C6;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171C22;
+    --fg: #E9E6DF;
+    --muted: #9AA3AD;
+    --accent: #8FBAD4;
+    --accent-ink: #12212B;
+    --trap: #E08A78;
+    --surface: #1F262F;
+    --line: #333E4A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171C22;
+  --fg: #E9E6DF;
+  --muted: #9AA3AD;
+  --accent: #8FBAD4;
+  --accent-ink: #12212B;
+  --trap: #E08A78;
+  --surface: #1F262F;
+  --line: #333E4A;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 46rem; margin-inline: auto; padding-block: 1.5rem 4rem; }
+h1, h2, h3 { font-family: "IBM Plex Serif", Georgia, serif; text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 6vw, 2.6rem); line-height: 1.15; margin: 0.2rem 0 0.4rem; }
+h2 { font-size: 1.3rem; margin: 2.8rem 0 0.4rem; padding-top: 0.6rem; border-top: 1px solid var(--line); }
+h2 .kicker, .eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); display: block; margin-bottom: 0.3rem;
+}
+h2 .kicker { display: block; margin-top: 0; }
+h3 { font-size: 1.02rem; margin: 1.2rem 0 0.3rem; }
+p { margin: 0.5rem 0; }
+ul, ol { margin: 0.5rem 0; padding-left: 1.3rem; }
+li { margin: 0.3rem 0; }
+a { color: var(--accent); text-underline-offset: 2px; }
+strong { font-weight: 600; }
+.small { font-size: 0.86rem; color: var(--muted); }
+
+/* Header */
+.masthead { padding: 0.8rem 0 1.4rem; }
+.eyebrow { margin-bottom: 0.1rem; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; margin-top: 0.6rem; }
+.meta-row span {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.progress-line {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.8rem; color: var(--accent); margin-top: 0.7rem;
+}
+
+/* Callout */
+.callout {
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px; padding: 1rem 1.1rem; margin: 1rem 0;
+}
+.callout h3 { margin-top: 0; }
+
+/* Fact cards */
+.facts { display: grid; gap: 0.9rem; margin: 0.8rem 0; }
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 6px; padding: 0.9rem 1rem;
+}
+.card h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+.card ul { margin: 0.2rem 0 0; }
+.trap { color: var(--trap); }
+.trap::before { content: "⚠ "; }
+.chip {
+  display: inline-block; font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: 3px; padding: 0.1rem 0.45rem; margin-right: 0.4rem;
+}
+
+/* Patterns table */
+.tablewrap { overflow-x: auto; margin: 0.8rem 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.92rem; }
+th, td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+
+/* Schedule */
+.day { margin: 1.1rem 0; }
+.day-badge {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent);
+}
+.day h3 { display: inline; margin-left: 0.5rem; }
+ul.tasks { list-style: none; padding: 0; }
+ul.tasks li {
+  display: flex; gap: 0.55rem; align-items: flex-start; margin: 0.45rem 0;
+}
+ul.tasks input[type="checkbox"] {
+  width: 1.05rem; height: 1.05rem; margin-top: 0.28rem; accent-color: var(--accent); flex: none;
+}
+ul.tasks label { cursor: pointer; }
+ul.tasks input[type="checkbox"]:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.reset {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.75rem;
+  background: none; border: none; color: var(--muted); text-decoration: underline;
+  cursor: pointer; padding: 0; margin-left: 0.8rem;
+}
+
+/* Links list */
+dl.links { margin: 0.6rem 0; }
+dl.links dt { font-weight: 600; margin-top: 0.6rem; }
+dl.links dd { margin: 0.1rem 0 0; font-size: 0.9rem; word-break: break-word; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<div class="wrap">
+
+<header class="masthead">
+  <span class="eyebrow">AP World · Mr. Chin · Quiz prep</span>
+  <h1>Chapter 6 Battle Plan</h1>
+  <div class="meta-row">
+    <span>Quiz: Tue 10/20</span>
+    <span>MCQs + SAQ</span>
+    <span>On Chromebooks</span>
+    <span>Source: Canvas assignment + Chin's decks</span>
+  </div>
+  <div class="progress-line"><span id="progress" aria-live="polite">0 of 14 done</span><button class="reset" id="reset" type="button">reset</button></div>
+</header>
+
+<section class="callout">
+  <h3>The one move that matters</h3>
+  <p><strong>Play Chin's Chapter 6 Kahoot until you can go 10-for-10.</strong> Chin has posted a Kahoot before each quiz so far, and each one matched the quiz closely (his Ch 5 deck preceded the Ch 5 quiz; the Ch 6 deck went up Oct 15, the quiz is Oct 20). Two data points is a pattern, not a guarantee — but the bet costs about 20 minutes, so take it.</p>
+  <p><span class="chip">Don't skip</span> Study the <em>wrong answers</em> too. They are Chin's map of the common misconceptions — exactly what an "EXCEPT" question tests.</p>
+  <p><a href="https://create.kahoot.it/share/chapter-6/3a8c8d65-1db5-4871-afa7-f0f875b09c17" rel="noopener">Chapter 6 Kahoot →</a> · <a href="https://create.kahoot.it/share/chapter-5-land-empires/3cc966e0-ad68-4978-ad09-3babdc88f20c" rel="noopener">Ch 5 Land Empires Kahoot →</a></p>
+</section>
+
+<h2><span class="kicker">Part 1</span>The Chapter 6 fact sheet</h2>
+<p class="small">Grouped by theme, from Chin's decks and the Unit 4 review deck. Learn each fact as an A→B chain, not an isolated term.</p>
+
+<div class="facts">
+  <div class="card">
+    <h3>Silver &amp; the global economy</h3>
+    <ul>
+      <li><strong>American silver (Potosí) → price revolution.</strong> Spanish-colonial silver flooded into Europe <em>and</em> China → massive inflation. Chin's #1 question: "silver caused ___" → <strong>inflation</strong>.</li>
+      <li><strong>Mercantilism</strong> = state controls trade to build national power: amass specie (silver/gold), limit imports, encourage exports.</li>
+      <li><strong>VOC (Dutch East India Company)</strong> = the great joint-stock company — pooled investor capital, spread risk, state-backed. The signature economic innovation of the Netherlands and England.</li>
+      <li><strong>Banda Islands = nutmeg.</strong> The VOC massacred and enslaved the Bandanese to corner the nutmeg trade — corporate violence for monopoly.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>The Portuguese empire</h3>
+    <ul>
+      <li><strong>Motive:</strong> direct access to Indian Ocean trade wealth — cut out the Ottoman/Muslim middlemen.</li>
+      <li><strong>Method = force</strong> → a <em>trading-post empire</em> (Goa, Malacca, Hormuz), not conquered territory.</li>
+      <li><strong>Cartaz</strong> = the permits Indian Ocean merchants had to buy from the Portuguese — a protection racket at sea.</li>
+      <li><strong>Why posts, not colonies?</strong> Asian empires were too strong to conquer; Europeans only got footholds. Key cause-effect pair.</li>
+      <li><strong>Monsoon winds</strong> = the environmental fact of Indian Ocean sailing.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Africa &amp; the slave trade</h3>
+    <ul>
+      <li><strong>Benin</strong> restricted participation in the slave trade for ~2 centuries — and lost territory because of it. Opting out of Atlantic trade had costs.</li>
+      <li><strong>Queen Nzinga</strong> (Ndongo/Matamba): fought the Portuguese, negotiated, allied with the Dutch.</li>
+      <li class="trap">In Chin's EXCEPT question, the LIE is "African rulers were willing to enslave their own subjects."</li>
+      <li><strong>Biggest destinations: Brazil &amp; the Caribbean</strong> (sugar). Sugar was profitable because enslaved people were worked to death and replaced.</li>
+      <li><strong>Inside Africa:</strong> more men taken → gender imbalance in families and communities.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Japan: reunification</h3>
+    <ul>
+      <li><strong>Order:</strong> Oda Nobunaga → Toyotomi Hideyoshi → Tokugawa shogunate.</li>
+      <li><strong>Effect:</strong> less social mobility for non-samurai — rigid class order: samurai → peasant → artisan → merchant.</li>
+      <li><strong>Sword hunt</strong> (Hideyoshi) = disarmed the peasants.</li>
+      <li><strong>Sankin-kōtai</strong> (alternate attendance) = daimyo spend every other year in Edo, families hostage → drained daimyo wealth, centralized Tokugawa power.</li>
+      <li class="trap">The lie in Chin's EXCEPT: "it restricted peasants' weapons" — that's the sword hunt, not sankin-kōtai.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Spanish Americas (review deck — fair game)</h3>
+    <ul>
+      <li><strong>Encomienda</strong> = Spanish coerced Indigenous labor. (Distinct from <strong>mita</strong>, the Inca-origin rotational labor system the Spanish used in the Andes.)</li>
+      <li><strong>Casta system</strong> order: Peninsular → Creole → Mestizo → Indio/Negro. Brazil more fluid; Spanish America more rigid.</li>
+      <li><strong>Demographic collapse:</strong> smallpox, measles, malaria killed 50–90% of Mesoamericans — disease, not guns.</li>
+      <li><strong>Columbian Exchange:</strong> Europe→Americas: cattle, pigs, horses. Americas→Eurasia: maize, potatoes.</li>
+      <li class="trap">Smallpox went Europe→Americas, NOT the other way.</li>
+      <li><strong>Magellan</strong> (Spain, 1519) = first circumnavigation. <strong>Da Gama</strong> (Portugal) = first sea route around Africa to India.</li>
+    </ul>
+  </div>
+</div>
+
+<h2><span class="kicker">Part 2</span>Chin's question patterns</h2>
+<p>From all 24 questions across his two chapter decks. He has five recurring formats:</p>
+
+<div class="tablewrap">
+<table>
+  <thead>
+    <tr><th>Format</th><th>Frequency</th><th>How to attack it</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>EXCEPT / find the lie / NOT</strong></td>
+      <td>~7 of 24 (29%)</td>
+      <td>Flip each choice mentally: ask "is this TRUE?" — the answer is the one that's <em>false</em>. Learn the misconception version of every fact, not just the fact.</td>
+    </tr>
+    <tr>
+      <td><strong>Term definition</strong><br><span class="small">yasak, cartaz, mercantilism, iltizams, encomienda</span></td>
+      <td>every deck</td>
+      <td>They come straight from the textbook's bold vocabulary. Flashcard every bold term in the chapter before quiz day.</td>
+    </tr>
+    <tr>
+      <td><strong>Cause → effect</strong><br><span class="small">silver→inflation, sugar→slavery, smallpox→collapse</span></td>
+      <td>every deck</td>
+      <td>Learn facts as A→B chains. Ask "so what?" after every term.</td>
+    </tr>
+    <tr>
+      <td><strong>Empire comparison</strong><br><span class="small">Mughal vs Ottoman tax, Brazil vs Spain, Qing vs Mongols</span></td>
+      <td>2–3 per deck</td>
+      <td>For each empire, note its ONE distinctive feature vs the others. That's what gets asked.</td>
+    </tr>
+    <tr>
+      <td><strong>Multi-select</strong><br><span class="small">(2 correct answers)</span></td>
+      <td>appeared in Ch 5</td>
+      <td>New Quizzes allows it. If two choices both look right, don't force yourself to pick one.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p class="trap">Reading the joke answers: Chin hides jokes among the choices ("massive inflation, bro", "the name of Mr. Chin's pet goldfish", "I got busted man I didn't do the reading"). Eliminate those instantly — the real trap is always the plausible-but-wrong choice sitting next to the true facts.</p>
+
+<h2><span class="kicker">Part 3</span>SAQ prep</h2>
+<p>An SAQ is 3 short parts (a/b/c), 1 point each. Each part: <strong>one direct answer sentence + one sentence of specific evidence or context.</strong> No intro, no fluff, 1–3 sentences max.</p>
+<p>Most likely Ch 6 angles, based on what Chin emphasized:</p>
+<ul>
+  <li><strong>Silver flows</strong> — economic effects of American silver on Europe <em>and</em> China (price revolution; Ming currency and taxes).</li>
+  <li><strong>Portuguese vs Dutch methods</strong> — force and trading posts vs joint-stock companies. Compare, don't just describe.</li>
+  <li><strong>Japan</strong> — how reunification changed society (social mobility, Christianity banned, sankin-kōtai).</li>
+  <li><strong>African agency</strong> — Benin's limits, Nzinga's resistance. Use specific names or it doesn't score.</li>
+</ul>
+<p><strong>Practice protocol (11 minutes, Sunday):</strong> pick one angle, write the SAQ in 8 minutes. Then spend 3 minutes <em>scoring it</em>: does each of a/b/c have (1) a direct answer sentence, and (2) one named piece of evidence? Any part missing either → rewrite that part once, then stop. Unscored practice just rehearses your own errors.</p>
+
+<h2><span class="kicker">Part 4</span>The schedule</h2>
+
+<div class="day">
+  <span class="day-badge">Tonight · Sat 10/18</span><h3>First contact</h3>
+  <ul class="tasks">
+    <li><input type="checkbox" id="t1"><label for="t1">Play Chin's Ch 6 Kahoot once. Note every miss. (15 min)</label></li>
+  </ul>
+</div>
+
+<div class="day">
+  <span class="day-badge">Sun 10/19 · D-1</span><h3>Build and close the gaps</h3>
+  <ul class="tasks">
+    <li><input type="checkbox" id="t2"><label for="t2">Read the Chapter 6 study guide + your chapter notes. Turn every bold term into a flashcard.</label></li>
+    <li><input type="checkbox" id="t3"><label for="t3">Replay the Ch 6 Kahoot until 10-for-10.</label></li>
+    <li><input type="checkbox" id="t4"><label for="t4">Write one practice SAQ in 8 minutes, then score it for 3 (protocol above).</label></li>
+  </ul>
+</div>
+
+<div class="day">
+  <span class="day-badge">Mon 10/20 eve · D-0</span><h3>Retrieval, not rereading</h3>
+  <ul class="tasks">
+    <li><input type="checkbox" id="t5"><label for="t5">Cover the fact sheet and recall the cause→effect chains out loud: silver→?, sword hunt→?, sankin-kōtai→?, Benin→?. Check, then repeat only the misses.</label></li>
+    <li><input type="checkbox" id="t6"><label for="t6">Review missed flashcards only — not the whole stack.</label></li>
+    <li><input type="checkbox" id="t7"><label for="t7">Re-read the two EXCEPT traps (red items in the fact sheet).</label></li>
+    <li><input type="checkbox" id="t8"><label for="t8">Sleep normally — recall is built by sleep.</label></li>
+  </ul>
+</div>
+
+<div class="day">
+  <span class="day-badge">Tue 10/20 · quiz day</span><h3>Morning skim</h3>
+  <ul class="tasks">
+    <li><input type="checkbox" id="t9"><label for="t9">10-minute self-quiz off the fact sheet — recall first, then check. Not a reread.</label></li>
+    <li><input type="checkbox" id="t10"><label for="t10">Bring your Chromebook.</label></li>
+  </ul>
+</div>
+
+<div class="day">
+  <span class="day-badge">After the quiz</span><h3>Bank the misses</h3>
+  <ul class="tasks">
+    <li><input type="checkbox" id="t11"><label for="t11">Same day: write down every question you remember missing. Those terms go into the permanent flashcards for the final (15% of the grade) and the AP exam in May — Chin's material is cumulative.</label></li>
+  </ul>
+</div>
+
+<h2><span class="kicker">Part 5</span>Rules of the game</h2>
+<p class="small">Verified against the syllabus posted on Canvas.</p>
+<ul>
+  <li>Quizzes and tests sit in the <strong>60% bucket</strong> (Unit Projects, Exams, Quizzes, Debates). The most controllable category in the course.</li>
+  <li>Missed a quiz day? <strong>Make it up the next class you attend, or within three school days</strong> — it's on you to arrange, Chin will not chase you.</li>
+  <li>Late work caps at <strong>70% credit</strong>.</li>
+  <li>Grading scale: <strong>B+ starts at 87</strong>. Raising quiz performance is the single biggest controllable lever on the course grade.</li>
+  <li>The <strong>final is 15%</strong> — quiz material returns there and on the AP exam in May.</li>
+</ul>
+
+<h2><span class="kicker">Part 6</span>Chapter 5 gap repair — after Ch 6 is solid</h2>
+<p>Ch 5 was the roughest quiz (7.5/12). Do this <strong>only after the Ch 6 Kahoot is 10/10</strong> — it's an investment in the final, not in Tuesday. The five that bit hardest, from Chin's full 14-question Ch 5 deck:</p>
+<ul>
+  <li><strong>Yasak</strong> = tribute tax on non-Russians (Siberian furs). <strong>Iltizams</strong> = Ottoman tax farming → "crazy high taxes" for regular people.</li>
+  <li><strong>Russia:</strong> serfdom expanded 1600s–1700s; Peter &amp; Catherine = westernization.</li>
+  <li><strong>Akbar</strong> legitimized rule by abolishing the jizya, translating Hindu texts, creating "Divine Faith" — <span class="trap">the lie is the "caliph + Dalai Lama" option.</span></li>
+  <li><strong>Mughals vs Ottomans:</strong> Mughals used zamindars (taxes by land productivity), Ottomans used tax farming.</li>
+  <li><strong>Balkans (multi-select!):</strong> the two FALSE statements — "Christian/Jewish women refused to use Muslim courts" (they used them) and "France allied with Austria" (France allied with the <em>Ottomans</em> against the Habsburgs). Conversion was limited (~19% Muslim).</li>
+</ul>
+<p><a href="https://create.kahoot.it/share/chapter-5-land-empires/3cc966e0-ad68-4978-ad09-3babdc88f20c" rel="noopener">Replay the Ch 5 Land Empires Kahoot →</a></p>
+
+<h2><span class="kicker">Part 7</span>Resources</h2>
+<dl class="links">
+  <dt>Kahoots (playable without login)</dt>
+  <dd><a href="https://create.kahoot.it/share/chapter-6/3a8c8d65-1db5-4871-afa7-f0f875b09c17" rel="noopener">Chapter 6 Kahoot</a></dd>
+  <dd><a href="https://create.kahoot.it/share/chapter-5-land-empires/3cc966e0-ad68-4978-ad09-3babdc88f20c" rel="noopener">Ch 5 Land Empires Kahoot</a></dd>
+  <dt>Study guides (SMUHSD login)</dt>
+  <dd><a href="https://docs.google.com/document/d/1WQEZKmty2smZFELREkpadN-flMKoepOVRUeEyotXOrY/edit" rel="noopener">Chapter 6 study guide</a></dd>
+  <dd><a href="https://docs.google.com/document/d/1s3qRa_AgB0QsfMV9-NDNKcrBqAw4mATdl5U1iVAMHSA/edit" rel="noopener">All-chapters study guide hub</a></dd>
+  <dt>Writing practice (SMUHSD login)</dt>
+  <dd><a href="https://docs.google.com/document/d/1s0mnN4WQqpL2MDxzAGfvP-pRdr7PG3AxfS81MjorjiE/edit" rel="noopener">SAQ topics</a></dd>
+  <dd><a href="https://docs.google.com/document/d/11ct6WeJ0Jv6c1VP2nrQvfUD5ZTF9mPG3WFDjGlKmhMo/edit" rel="noopener">Doc analysis practice</a></dd>
+  <dd><a href="https://docs.google.com/document/d/194-Bbwps9CI_oe5m0QDBWM7XXAT_UoTamFbgO9Jfo8U/edit" rel="noopener">LEQ rubrics</a></dd>
+  <dd><a href="https://docs.google.com/document/d/1dtxgB6OJO9S5zHR6QXNiQQ1LlC5xXukQvWO60TcNK48/edit" rel="noopener">LEQ planning guide</a></dd>
+  <dt>Textbook &amp; flashcards</dt>
+  <dd><a href="https://drive.google.com/file/d/1S5RyE3-SXqkRkTv02q4HtTLqsnGwuCKH/view" rel="noopener">Textbook PDF (posted by Chin, SMUHSD login)</a></dd>
+  <dd><a href="https://quizlet.com/608663350" rel="noopener">Quizlet — Unit 1 terms (Gnass)</a></dd>
+</dl>
+
+<p class="small" style="margin-top: 2.5rem">Built from the Canvas course materials for AP World (Mr. Chin, Burlingame High). Quiz date, Chromebook notice, Kahoot links, and grading rules verified against the syllabus, calendars, and assignments pulled from Canvas on Oct 18. Two numbers in an earlier draft of this plan were wrong and are corrected here from the syllabus: the assessment bucket is 60% (not 65%) and late work caps at 70% (not 50%).</p>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "c6-battle-plan-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { state = {}; }
+  var boxes = Array.prototype.slice.call(
+    document.querySelectorAll("input[type=checkbox][id]")
+  );
+  var progress = document.getElementById("progress");
+  var reset = document.getElementById("reset");
+
+  function updateCount() {
+    var done = 0;
+    boxes.forEach(function (b) { if (b.checked) done++; });
+    progress.textContent = done + " of " + boxes.length + " done";
+  }
+
+  boxes.forEach(function (b) {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener("change", function () {
+      state[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+      updateCount();
+    });
+  });
+
+  reset.addEventListener("click", function () {
+    boxes.forEach(function (b) { b.checked = false; state[b.id] = false; });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+    updateCount();
+  });
+
+  updateCount();
+})();
+</script>

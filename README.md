@@ -4,6 +4,9 @@ Reads AP World History course materials from Canvas via the Canvas LMS API,
 analyzes them, and generates new study material to facilitate learning and
 practicing the content (study guides, practice questions, flashcards, etc.).
 
+The study plan this project produced is hosted on GitHub Pages:
+https://kbsimple.github.io/canvas-ap-world/ (served from `docs/`).
+
 ## How it works
 
 1. **Ingest** — Pull course modules, pages, assignments, and files for an
