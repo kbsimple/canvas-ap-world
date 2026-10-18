@@ -49,8 +49,9 @@ def _pull_pages(
         for item in module.get("items", []):
             if item.get("type") != "Page":
                 continue
-            url = item.get("html_url") or ""
-            slug = url.rsplit("/", 1)[-1]
+            # Page-type module items carry the page's slug in page_url;
+            # html_url points at the module item, not the page.
+            slug = item.get("page_url") or ""
             if not slug or slug in slugs:
                 continue
             slugs.append(slug)

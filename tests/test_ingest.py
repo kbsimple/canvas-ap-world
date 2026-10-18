@@ -39,8 +39,10 @@ def test_pull_writes_manifest_and_pages(tmp_path: Any) -> None:
                 "items": [
                     {
                         "type": "Page",
+                        "title": "Unit 3",
+                        "page_url": "unit-3",
                         "html_url":
-                            "https://canvas.example.com/c/1/pages/unit-3",
+                            "https://canvas.example.com/c/1/modules/items/7",
                     },
                     {"type": "Assignment"},
                 ],
