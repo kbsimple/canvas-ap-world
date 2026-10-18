@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.mypy_cache/
+.pytest_cache/
+
+# Environment
+.env
+
+# Pulled course materials (student data — never commit)
+data/
+
+# Editors
+.vscode/
+.idea/
+.DS_Store
